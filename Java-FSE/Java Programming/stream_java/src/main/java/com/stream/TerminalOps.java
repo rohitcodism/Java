@@ -69,6 +69,23 @@ public class TerminalOps {
 
         // * Lazy Operations
 
+        // * We cannot reuse a stream after a terminal operation has been called on it
+
+        // * .forEach cannot print the elements inside a parallel stream in ordered fashion but .forEachOrdered can
+
+        List<Integer> sortedList = ls1.stream().sorted().toList();
+        
+
+        System.out.println("Using forEach:");
+        sortedList.parallelStream().forEach(System.out::println);
+
+        System.out.println("Using forEachOrdered:");
+        sortedList.parallelStream().forEachOrdered(System.out::println);
+
+        // Difference:
+        // * forEach on a parallel stream may print elements in any order (not guaranteed).
+        // * forEachOrdered on a parallel stream preserves the encounter order of the stream.
+
 
     }
 }

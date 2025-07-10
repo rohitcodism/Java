@@ -1,5 +1,8 @@
 package com.stream;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -35,6 +38,36 @@ public class IntOps {
 
         // * 6. .skip()
         System.out.println(Stream.generate(() -> 2).skip(10).limit(100).skip(10).count());
+
+        // * 7. .peek()
+        //Stream.iterate(1, x -> x+2).limit(100).peek(System.out::print).count();
+
+        // * 7. .max() / .min()
+        System.out.println(Stream.of(2,44,67,43,19,3,77).max(Comparator.naturalOrder()).orElse(0));
+
+        System.out.println(Stream.of(2,44,67,43,19,3,77).min(Comparator.naturalOrder()).orElse(0));
+
+        List<List<String>> fruits2DList = List.of(
+            List.of("Apple", "Banana", "Cherry"),
+            List.of("Date", "Elderberry", "Fig"),
+            List.of("Grape", "Honeydew", "Indian Fig")
+        );
+        System.out.println(fruits2DList.get(1).get(2));
+
+        fruits2DList.stream().flatMap(x -> x.stream()).map(x -> x.toUpperCase()).peek(System.out::println).count();
+
+        List<String> randomSentences = List.of(
+            "Hello world.",
+            "Java streams.",
+            "Learn programming."
+        );
+
+        List<String> flattedSentences = randomSentences
+                .stream()
+                .flatMap(x -> Arrays.stream(x.split("")))
+                .toList();
+
+        System.out.println(flattedSentences);
 
     }
 }
